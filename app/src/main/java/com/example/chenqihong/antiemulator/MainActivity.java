@@ -10,8 +10,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String deviceInfo = Device.printDeviceInf("DeviceInfo", this);
         TextView textView = (TextView)findViewById(R.id.main_text);
-        textView.setText(deviceInfo);
     }
 }

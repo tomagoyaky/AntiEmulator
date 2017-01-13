@@ -5,4 +5,5 @@ package com.example.chenqihong.antiemulator.controller;
  */
 
 public class DetectorFactory {
+
 }

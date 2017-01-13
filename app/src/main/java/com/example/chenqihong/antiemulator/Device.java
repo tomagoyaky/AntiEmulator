@@ -107,8 +107,6 @@ public class Device {
     private  static String getLocalIpAddress() {
         String ipAddress = null;
         String hardwareAddress = null;
-        boolean hasIpAddr = false;
-        boolean hasMac = false;
         StringBuilder sb = new StringBuilder();
         try {
             List<NetworkInterface> interfaces = Collections
