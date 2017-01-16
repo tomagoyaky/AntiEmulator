@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         mDetector.setEmulatorCheckedListener(new GeneralDetector.EmulatorCheckedListener() {
             @Override
             public void onChecked(boolean[] status) {
-                textView.setText("Emulator: " + status[0] + ", "+ status[1] + ", "+
+                textView.setText("模块状态:（true：符合模拟器特征值/false：不符合） \n电池：" + status[0] + ", CPU："+ status[1] + ", "+
                         status[2] + ", "+ status[3] + ", "+ status[4] + ", "+
                         status[5] + ", "+ status[6] + ", ");
             }
