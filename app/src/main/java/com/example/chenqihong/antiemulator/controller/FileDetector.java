@@ -11,7 +11,6 @@ import java.util.List;
 
 public class FileDetector {
     private List<String> dirList = new ArrayList<>();
-
     public void addDir(String dirPath){
         dirList.add(dirPath);
     }
@@ -40,10 +39,11 @@ public class FileDetector {
 
         for(int i = 0; i < fileNames.length; i++){
             File file = new File(fileNames[i]);
-            if(file.isDirectory()){
-                result |= readFiles(file.getAbsolutePath());
+            if(file.isFile()){
+                result |= matchEmulator(file.getName());
             }else{
                 result |= matchEmulator(file.getName());
+                result |= readFiles(file.getAbsolutePath());
             }
         }
 

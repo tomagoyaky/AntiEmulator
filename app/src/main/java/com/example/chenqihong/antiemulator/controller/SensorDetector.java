@@ -7,9 +7,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.example.chenqihong.antiemulator.data.SensorBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,9 +25,11 @@ import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
 public class SensorDetector {
     private Context mContext;
     private SensorManager mSensorManager;
+    private OnSensorDectectedListener mListener;
+    private SensorEventListener mEventListener;
     private long mBefore;
     private List<SensorBean> mSensorDataList = new ArrayList<>();
-    private interface OnSensorDectectedListener{
+    public interface OnSensorDectectedListener{
         void onFinished(boolean isEmulator);
     }
 
@@ -33,25 +37,27 @@ public class SensorDetector {
         mContext = context;
     }
 
+    public void setOnSensorDetectedListener(OnSensorDectectedListener listener){
+        mListener = listener;
+    }
+
     public void collectAcclerometerData(){
         mSensorManager = (SensorManager)mContext
                 .getSystemService(Context.SENSOR_SERVICE);
         mBefore = System.currentTimeMillis();
         Sensor sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-        mSensorManager.registerListener(new SensorEventListener() {
+        mEventListener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
 
-                float x = event.values[0];
-                float y = event.values[1];
-                float z = event.values[2];
+                float x = roundHalfUp(event.values[0]);
+                float y = roundHalfUp(event.values[1]);
+                float z = roundHalfUp(event.values[2]);
                 long after = System.currentTimeMillis();
-                if(500 == mBefore - after){
+                SensorBean bean = new SensorBean(x, y, z);
+                mSensorDataList.add(bean);
+                if(2000 < after - mBefore){
                     checkEmulator();
-                }else{
-                    SensorBean bean = new SensorBean(x, y, z);
-                    mSensorDataList.add(bean);
                 }
 
             }
@@ -61,11 +67,19 @@ public class SensorDetector {
 
             }
 
-        }, sensor, SensorManager.SENSOR_DELAY_GAME);
+        };
+
+        mSensorManager.registerListener(mEventListener, sensor, SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    private float roundHalfUp(float f){
+        BigDecimal b = new BigDecimal(f);
+        return b.setScale(1, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
     private void checkEmulator(){
-
+        mListener.onFinished(isAllDataSame() | isLikeTag());
+        mSensorManager.unregisterListener(mEventListener);
     }
 
     private boolean isAllDataSame(){
@@ -92,7 +106,7 @@ public class SensorDetector {
     private boolean isLikeTag(){
         Iterator<SensorBean> i = mSensorDataList.iterator();
         SensorBean bean = null;
-        if(!isLikeTag()){
+        if(!isAllDataSame()){
             return false;
         }
 

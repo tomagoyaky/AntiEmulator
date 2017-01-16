@@ -47,7 +47,7 @@ public class PhoneBookDetector {
                 null,
                 null);
 
-        if(null == phoneCursor){
+        if(null != phoneCursor){
             if(phoneCursor.moveToNext()){
                 return false;
             }
@@ -64,12 +64,12 @@ public class PhoneBookDetector {
             return false;
         }
 
-        Cursor phoneCursor = resolver.query(CallLog.Calls.CONTENT_URI, PHONE_BOOK,
+        Cursor phoneCursor = resolver.query(CallLog.Calls.CONTENT_URI, CALL_LOG,
                 null,
                 null,
                 null);
 
-        if(null == phoneCursor){
+        if(null != phoneCursor){
             if(phoneCursor.moveToNext()){
                 return false;
             }

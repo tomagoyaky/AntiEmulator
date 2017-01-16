@@ -1,5 +1,6 @@
 package com.example.chenqihong.antiemulator.controller;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,10 @@ public class StorageDetector {
 
         for(int i = 0; i < fileName.length; i++){
             if(fileName[i].contains("mmcblk0")){
-                return true;
+                return false;
             }
         }
 
-        return false;
+        return true;
     }
 }

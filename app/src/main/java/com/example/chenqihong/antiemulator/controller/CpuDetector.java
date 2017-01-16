@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class CpuDetector {
-    private static long LENGTH = 500;
+    private static long LENGTH = 1000;
     private static long STEP = 10;
     private boolean mResult;
     private OnDetectFinishListener mListener;
@@ -24,7 +24,7 @@ public class CpuDetector {
     }
     public void detectEmulator(){
         final List<String> freq = new ArrayList<>();
-        CountDownTimer timer = new CountDownTimer(500, 10) {
+        CountDownTimer timer = new CountDownTimer(LENGTH, STEP) {
             @Override
             public void onTick(long millisUntilFinished) {
                 freq.add(getCurrentCpuFreq());
@@ -67,6 +67,10 @@ public class CpuDetector {
 
         Iterator<String> i = freq.iterator();
         String target = i.next();
+        if(null == target){
+            return true;
+        }
+
         while (i.hasNext()){
             if(!target.equals(i.next())){
                 return false;
@@ -83,7 +87,7 @@ public class CpuDetector {
 
         String tag = freq.get(0);
         for(int i = 0; i < Emulator.CPU_FREQ_TAG.length; i++){
-            if(Emulator.CPU_FREQ_TAG.equals(tag)){
+            if(Emulator.CPU_FREQ_TAG[i].equals(tag)){
                 return true;
             }
         }

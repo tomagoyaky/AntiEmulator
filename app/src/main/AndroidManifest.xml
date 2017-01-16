@@ -2,10 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chenqihong.antiemulator">
     <permission android:name="android.permission.READ_PHONE_STATE"/>
+    <permission android:name="android.permission.READ_CALL_LOG"/>
+    <permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission  android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:allowBackup="true"
