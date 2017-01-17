@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.chenqihong.antiemulator.controller.EmulatorPattern;
 import com.example.chenqihong.antiemulator.controller.GeneralDetector;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,9 +19,16 @@ public class MainActivity extends AppCompatActivity {
         mDetector.setEmulatorCheckedListener(new GeneralDetector.EmulatorCheckedListener() {
             @Override
             public void onChecked(boolean[] status) {
-                textView.setText("模块状态:（true：符合模拟器特征值/false：不符合） \n电池：" + status[0] + ", CPU："+ status[1] + ", "+
-                        status[2] + ", "+ status[3] + ", "+ status[4] + ", "+
-                        status[5] + ", "+ status[6] + ", ");
+                StringBuilder sb = new StringBuilder();
+                sb.append("模块状态:（true：符合模拟器特征值/false：不符合） \n电池：" +
+                        status[0] + ", \nCPU："+ status[1] + ", \n文件："+
+                        status[2] + ", \n网络："+ status[3] + ", \n通讯录："+ status[4] + ", \n传感器:"+
+                        status[5] + ", \n存储："+ status[6] + "\n\n");
+
+                sb.append("模拟器判断：（true：模拟器/false：不是模拟器） ：" +
+                        EmulatorPattern.recognize(status));
+
+                textView.setText(sb.toString());
             }
         });
 

@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class CpuDetector {
-    private static long LENGTH = 1000;
+    private static long LENGTH = 2000;
     private static long STEP = 10;
     private boolean mResult;
     private OnDetectFinishListener mListener;
@@ -32,7 +32,7 @@ public class CpuDetector {
 
             @Override
             public void onFinish() {
-                mResult = isSameFreq(freq)|isMatchedTag(freq);
+                mResult = isSameFreq(freq) && isMatchedTag(freq);
                 mListener.onFinished(mResult);
             }
         };

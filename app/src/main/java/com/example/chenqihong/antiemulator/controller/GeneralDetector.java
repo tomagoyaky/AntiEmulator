@@ -115,7 +115,7 @@ public class GeneralDetector {
         fileDetector = new FileDetector();
         fileDetector.addDir("/dev");
         fileDetector.addDir("/sys");
-        //fileDetector.addDir("/system");
+        fileDetector.addDir("/system");
         fileDetector.addDir("/system/priv-app");
         check(fileDetector.isEmulator(), INDEX_FILE);
     }
