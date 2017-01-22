@@ -11,6 +11,7 @@ import java.util.List;
 
 public class FileDetector {
     private List<String> dirList = new ArrayList<>();
+    private int mRecursiveCount = 0;
     public void addDir(String dirPath){
         dirList.add(dirPath);
     }
@@ -28,6 +29,10 @@ public class FileDetector {
     private boolean readFiles(String dirPath){
         File dir = new File(dirPath);
         boolean result = false;
+        if(mRecursiveCount > 5){
+            return result;
+        }
+
         if(dir.isFile()){
             return matchEmulator(dir.getName());
         }
@@ -43,10 +48,12 @@ public class FileDetector {
                 result |= matchEmulator(file.getName());
             }else{
                 result |= matchEmulator(file.getName());
+                mRecursiveCount ++;
                 result |= readFiles(file.getAbsolutePath());
             }
         }
 
+        mRecursiveCount --;
         return result;
     }
 
