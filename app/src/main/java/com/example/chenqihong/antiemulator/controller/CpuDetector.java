@@ -86,6 +86,10 @@ public class CpuDetector {
         }
 
         String tag = freq.get(0);
+        if(null == tag){
+            return true;
+        }
+
         for(int i = 0; i < Emulator.CPU_FREQ_TAG.length; i++){
             if(Emulator.CPU_FREQ_TAG[i].equals(tag)){
                 return true;

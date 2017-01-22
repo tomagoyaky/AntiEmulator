@@ -1,6 +1,8 @@
 package com.example.chenqihong.antiemulator;
 
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -45,7 +47,7 @@ public class Device {
     }
 
 
-    public static String printDeviceInf(String tag, Context context){
+    public static String printDeviceInf(Context context){
         StringBuilder sb = new StringBuilder();
         sb.append(getSystemPropertyInfo());
         sb.append(getPhoneInfo(context));
@@ -70,8 +72,9 @@ public class Device {
         sb.append("TIME ").append(android.os.Build.TIME).append("\n");
         sb.append("TYPE ").append(android.os.Build.TYPE).append("\n");
         sb.append("USER ").append(android.os.Build.USER).append("\n");
-        sb.append("NET_WORK " + getLocalIpAddress());
-        sb.append("FEATURED_FILES " + readFeaturedFiles());
+        sb.append("NET_WORK " + getLocalIpAddress()).append("\n");
+        //sb.append("FEATURED_FILES " + readFeaturedFiles()).append("\n");
+        sb.append("SENSOR_LIST " + getSensorList(context)).append("\n");
         return sb.toString();
     }
 
@@ -141,6 +144,34 @@ public class Device {
             e.printStackTrace();
         }
         return sb.toString();
+    }
+
+    private static String getSensorList(Context context) {
+        // 获取传感器管理器
+        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+
+        // 获取全部传感器列表
+        List<Sensor> sensors = sensorManager.getSensorList(Sensor.TYPE_ALL);
+
+        // 打印每个传感器信息
+        StringBuilder strLog = new StringBuilder();
+        int iIndex = 1;
+        for (Sensor item : sensors) {
+            strLog.append(iIndex + ".");
+            strLog.append("	Sensor Type - " + item.getType() + "\r\n");
+            strLog.append("	Sensor Name - " + item.getName() + "\r\n");
+            strLog.append("	Sensor Version - " + item.getVersion() + "\r\n");
+            strLog.append("	Sensor Vendor - " + item.getVendor() + "\r\n");
+            strLog.append("	Maximum Range - " + item.getMaximumRange() + "\r\n");
+            strLog.append("	Minimum Delay - " + item.getMinDelay() + "\r\n");
+            strLog.append("	Power - " + item.getPower() + "\r\n");
+            strLog.append("	Resolution - " + item.getResolution() + "\r\n");
+            strLog.append("\r\n");
+            iIndex++;
+        }
+
+        return strLog.toString();
+        //System.out.println(strLog.toString());
     }
 
 }

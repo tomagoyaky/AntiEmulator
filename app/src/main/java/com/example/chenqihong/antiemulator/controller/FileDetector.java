@@ -30,6 +30,7 @@ public class FileDetector {
         File dir = new File(dirPath);
         boolean result = false;
         if(mRecursiveCount > 5){
+            mRecursiveCount --;
             return result;
         }
 
@@ -39,6 +40,7 @@ public class FileDetector {
 
         String[] fileNames = dir.list();
         if(null == fileNames){
+            mRecursiveCount --;
             return false;
         }
 

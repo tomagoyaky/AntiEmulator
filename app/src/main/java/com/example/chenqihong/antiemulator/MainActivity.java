@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 sb.append("模块状态:（true：符合模拟器特征值/false：不符合） \n电池：" +
                         status[0] + ", \nCPU："+ status[1] + ", \n文件："+
                         status[2] + ", \n网络："+ status[3] + ", \n通讯录："+ status[4] + ", \n传感器:"+
-                        status[5] + ", \n存储："+ status[6] + "\n\n");
+                        status[5] + ", \n存储："+ status[6] + "\n温度：" + status[7] + "\n\n");
 
                 sb.append("模拟器判断：（true：模拟器/false：不是模拟器） ：" +
                         EmulatorPattern.recognize(status));
@@ -33,5 +33,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mDetector.startChecking();
+
+        //textView.setText(Device.printDeviceInf(this));
     }
 }

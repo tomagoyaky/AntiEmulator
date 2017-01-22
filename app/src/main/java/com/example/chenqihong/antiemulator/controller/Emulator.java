@@ -15,5 +15,5 @@ public class Emulator {
     public static double[] SENSOR_TAG_1 = {0, 0, 9.8};
     public static double[] SENSOR_TAG_2 = {0, 9.8, 0.8};
     public static int[] BATTERY_LEVEL_TAG  = {50, 99, 100};
-    public static float[] BATTERY_THERMAL_TAG = {0, 25};
+    public static float[] BATTERY_THERMAL_TAG = {0, 25, 3};
 }

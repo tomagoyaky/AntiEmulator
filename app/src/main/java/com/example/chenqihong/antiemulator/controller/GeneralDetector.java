@@ -9,16 +9,18 @@ import android.provider.ContactsContract;
  */
 
 public class GeneralDetector {
-    private final static int INDEX_BATTERY = 0;
-    private final static int INDEX_CPU = 1;
-    private final static int INDEX_FILE = 2;
-    private final static int INDEX_NETWORK = 3;
-    private final static int INDEX_PHONEBOOK = 4;
-    private final static int INDEX_SENSOR = 5;
-    private final static int INDEX_STORAGE = 6;
+    public final static int INDEX_BATTERY = 0;
+    public final static int INDEX_CPU = 1;
+    public final static int INDEX_FILE = 2;
+    public final static int INDEX_NETWORK = 3;
+    public final static int INDEX_PHONEBOOK = 4;
+    public final static int INDEX_SENSOR = 5;
+    public final static int INDEX_STORAGE = 6;
+    public final static int INDEX_THERMAL = 7;
+    public final static int INDEX_ALL = 8;
     private Context mContext;
-    private boolean[] mStatus = new boolean[7];
-    private boolean[] mFinished = new boolean[7];
+    private boolean[] mStatus = new boolean[INDEX_ALL];
+    private boolean[] mFinished = new boolean[INDEX_ALL];
     private BatteryDetector batteryDetector;
     private CpuDetector cpuDetector;
     private FileDetector fileDetector;
@@ -26,6 +28,7 @@ public class GeneralDetector {
     private PhoneBookDetector phoneBookDetector;
     private SensorDetector sensorDetector;
     private StorageDetector storageDetector;
+    private ThermalDetector thermalDetector;
     private EmulatorCheckedListener mListener;
 
     public GeneralDetector(Context context){
@@ -44,6 +47,7 @@ public class GeneralDetector {
         checkSeneor();
         checkStorage();
         checkFiles();
+        checkThermal();
     }
 
 
@@ -71,6 +75,17 @@ public class GeneralDetector {
                 check(result, INDEX_BATTERY);
             }
         });
+    }
+
+    private void checkThermal(){
+        thermalDetector = new ThermalDetector();
+        thermalDetector.setOnThermalDetectFinishedListener(new ThermalDetector.OnThermalDetectFinishListener() {
+            @Override
+            public void onFinished(boolean result) {
+                check(result, INDEX_THERMAL);
+            }
+        });
+        thermalDetector.detectEmulator();
     }
 
     private void checkCpu(){

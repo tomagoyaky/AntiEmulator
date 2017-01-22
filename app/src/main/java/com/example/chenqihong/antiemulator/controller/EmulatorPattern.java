@@ -6,11 +6,17 @@ package com.example.chenqihong.antiemulator.controller;
 
 public class EmulatorPattern {
     public static boolean recognize(boolean[] status){
-        if(7 != status.length){
+        if(GeneralDetector.INDEX_ALL != status.length){
             return false;
         }
 
-        if(status[2] && status[3] && status[5] && (status[0] || status[1] || status[4])){
+        if(status[GeneralDetector.INDEX_FILE]
+                && status[GeneralDetector.INDEX_NETWORK]
+                && status[GeneralDetector.INDEX_SENSOR]
+                && ((status[GeneralDetector.INDEX_BATTERY]
+                && status[GeneralDetector.INDEX_THERMAL])
+                || status[GeneralDetector.INDEX_CPU]
+                || status[GeneralDetector.INDEX_PHONEBOOK])){
             return true;
         }
 

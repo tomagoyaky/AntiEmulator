@@ -5,6 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.CountDownTimer;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chenqihong on 2017/1/12.
@@ -43,6 +52,7 @@ public class BatteryDetector {
 
         return false;
     }
+
 
     private boolean checkLevel(int level){
         for(int i = 0; i < Emulator.BATTERY_LEVEL_TAG.length; i++){
